@@ -1,0 +1,52 @@
+:root {
+  --darkest: #333333;
+  --darker: #50587c;
+  --medium: #bcd39c;
+  --lighter: #c7faf6;
+  --lightest: #fffcad;
+  --white: #f3f3f3;
+}
+
+.navbar {
+  background-color: var(--darker);
+  color: var(--white);
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  color: var(--lightest);
+  transition: all 0.4s ease-in-out;
+}
+
+body {
+  background-color: var(--white);
+  color: var(--darkest);
+}
+
+footer {
+  background-color: var(--darker);
+  color: var(--white);
+}
+
+.contact {
+  background-color: var(--lighter);
+  color: var(--darkest);
+}
+
+.findADoc {
+  background-color: var(--lightest);
+  color: var(--darkest);
+}
+
+.news {
+  background-image: linear-gradient(var(--lightest), var(--lighter));
+  color: var(--darkest);
+}
+
+.form {
+  background-image: linear-gradient(var(--medium), var(--lightest));
+  color: var(--darkest);
+}
