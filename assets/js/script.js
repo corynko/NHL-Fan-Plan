@@ -48,3 +48,9 @@ fetch("https://npiregistry.cms.hhs.gov/api/?version=2.1&" + query)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
+
+// document.getElementByClass("#btn-primary").addEventListener("onclick", function(
+//     //Saving user information to local storage
+//     localstorage.setItem('form-label', 'form-check-input')
+//     //Where to declare these classes?
+// );
