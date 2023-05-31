@@ -7,16 +7,16 @@
   --white: #f3f3f3;
 }
 
-.navbar {
+.navBar {
   background-color: var(--darker);
   color: var(--white);
 }
 
-.navbar a {
+.navBar a {
   text-decoration: none;
 }
 
-.navbar a:hover {
+.navBar a:hover {
   color: var(--lightest);
   transition: all 0.4s ease-in-out;
 }
