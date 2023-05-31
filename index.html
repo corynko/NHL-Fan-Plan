@@ -7,13 +7,14 @@
     <title>Find a Doc</title>
     <link rel="stylesheet" href="reset.css"/>
     <link rel="stylesheet" href="styles.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   </head>
 
 <body>
 <header>
-  <h1>Find a Doc</h1>
+  <h1 class="fw-bold text-center">Find a Doc</h1>
   <section class = 'directory'>
-    <div class="navBar">
+    <div class="navBar text-right fs-4">
       <a href = '#'>Home</a>
       <a href = '#'>Your Account</a>
       <a href = '#contact'>Contact Us</a>
@@ -21,7 +22,7 @@
   </section>
 </header>
 
-
+<main>
 
 <div>
   <section class="docsNearYou">
@@ -47,16 +48,28 @@
   </aside>
 </div>
 
-
+<!--Modal start-->
 <div id="formModal" class="class">
 
   <div>
-    
+    <ul>
+      <li class="name">Name</li>
+      <li class="email">Email</li>
+      <li class="insurance">Insurance</li>
+      <li class="zipcode">Zipcode</li>
+  </ul>
+  </div>
+
+  <div>
+    <h3 class="createBtn">Create</h3>
   </div>
 
 
 </div>
 
+<!--Modal end-->
+
+</main>
 
 <footer class="contact">
   <h3>Contact Info</h3>
@@ -64,6 +77,7 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
 </body>
 </html>
