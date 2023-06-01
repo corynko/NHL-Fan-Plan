@@ -35,3 +35,13 @@ fetch("https://statsapi.web.nhl.com/api/v1/teams/17?expand=team.stats", {
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
+
+// This function is for storing the values inputted in the 'add a team' section of the webpage
+const userTeam = function (newTeamSubmit) {
+  //setting this const is useful because on the user side, they most likely will not need to. How can they Change if need be?
+  // is the 'formModal' element necessary here?
+  formModal.addEventListener("onclick", formCity, formTeam);
+  console.log("Data Collected!");
+  //"onclick" was moved down here. put simply... the click IS the event.
+  //This shows that 'on click' a new team is submitted, the event listener stores the data that was submitted.
+};
