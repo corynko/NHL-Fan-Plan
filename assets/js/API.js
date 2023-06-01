@@ -26,6 +26,8 @@ fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
   .then((result) => console.log(result))
   .catch((error) => console.log("error", error));
 
+// ============================================================================================================================================================================================
+
 // NHL Stats API Documentation: https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md
 // Can pull an INSANE amount of information from this API. Teams, rosters, player stats, schedules, scores, all the way from the beginning of the league to present
 
