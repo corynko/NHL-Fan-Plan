@@ -1,33 +1,41 @@
 :root {
+  --black: #000000;
   --darkest: #333333;
-  --darker: #50587c;
-  --medium: #bcd39c;
-  --lighter: #c7faf6;
-  --lightest: #fffcad;
+  --darker: #1a5e63;
+  --medium: #236192;
+  --lighter: #6f263d;
+  --lightest: #a2aaad;
   --white: #f3f3f3;
 }
 
 .navBar {
-  background-color: var(--darker);
+  background-color: var(--medium);
   color: var(--white);
 }
 
-.navBar a {
+.navLinks a {
   text-decoration: none;
+  color: var(--white);
 }
 
-.navBar a:hover {
+.navLinks a:hover {
   color: var(--lightest);
+  border: solid 1px var(--lightest);
+  transition: all 0.2s ease-in-out;
+}
+
+.navLinks a:focus {
+  color: var(--white);
+  border: solid 1px var(--white);
   transition: all 0.4s ease-in-out;
 }
 
-body {
+main {
   background-color: var(--white);
-  color: var(--darkest);
 }
 
 footer {
-  background-color: var(--darker);
+  background-color: var(--medium);
   color: var(--white);
 }
 
@@ -36,17 +44,16 @@ footer {
   color: var(--darkest);
 }
 
-.findADoc {
-  background-color: var(--lightest);
+.myTeams {
+  background-color: var(--white);
   color: var(--darkest);
 }
 
 .news {
-  background-image: linear-gradient(var(--lightest), var(--lighter));
   color: var(--darkest);
 }
 
 .form {
-  background-image: linear-gradient(var(--medium), var(--lightest));
-  color: var(--darkest);
+  background-color: var(--lighter);
+  color: var(--white);
 }

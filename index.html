@@ -15,112 +15,179 @@
     />
   </head>
 
-  <body>
-    <header class="container navBar">
-      <h1 class="fw-bold text-center w-50">Find a Doc</h1>
-      <section class="directory">
-        <div class="text-right fs-4 w-50">
-          <a href="#">Home</a>
-          <a href="#">Your Account</a>
-          <a href="#contact">Contact Us</a>
-        </div>
-      </section>
-    </header>
+  <header
+    class="d-flex flex-wrap justify-content-center py-3 mb-4 px-3 border-bottom navBar"
+  >
+    <a
+      href="/"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+    >
+      <img
+        alt="NHL Fan Plan Logo"
+        width="80"
+        height="125"
+        src="./assets/images/nhl-fan-plan@200x.png"
+      />
+    </a>
 
+    <ul class="nav nav-pills align-items-center navLinks">
+      <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">News</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">My Teams</a></li>
+    </ul>
+  </header>
+
+  <body>
     <main>
       <div class="container">
-        <section class="findADoc">
-          <h2 class="text-center pt-4">Doctors Near You</h2>
-          <p>Based on INS Coverage</p>
-          <!--This is for the API-->
-          <div class="docList"></div>
-        </section>
-
-        <section class="userFormInfo">
-          <h2>Your Information</h2>
-          <p class="name">Name:</p>
-          <p class="userEmail">Email:</p>
-          <p class="insurance">Insurance Coverage:</p>
-          <p class="zip">Zip Code:</p>
-        </section>
-
-        <aside id="news" class="news text-center w-25">
-          <article class="link1 newsArticle" href="https"></article>
-          <article class="link2 newsArticle" href="https"></article>
-          <article class="link3 newsArticle" href="https"></article>
-        </aside>
+        <div class="row justify-content-center">
+          <section class="myTeams col-8">
+            <h2 class="text-center pt-4">Dashboard</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">City</th>
+                  <th scope="col">W-L-T</th>
+                  <th scope="col">Last Result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" id="name"></th>
+                  <td id="distance"></td>
+                  <td id="specialty"></td>
+                  <td id="phone"></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-center fs-5 py-2" id="currentIns"></p>
+            <!--This is for the API-->
+            <div class="docList"></div>
+          </section>
+          <section class="col py-4">
+            <aside id="news" class="py-5 news text-center">
+              <article class="link1 newsArticle" href="https">
+                <h4>Something Happened!</h4>
+                <p class="py-4">
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit
+                  nam suscipit in totam, quasi at.
+                </p>
+              </article>
+              <article class="link2 newsArticle" href="https">
+                <h4>Something Happened!</h4>
+                <p class="py-4">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Perspiciatis vitae architecto et veniam esse quibusdam.
+                </p>
+              </article>
+              <article class="link3 newsArticle" href="https">
+                <h4>Something Happened!</h4>
+                <p class="py-4">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  autem ratione reprehenderit beatae officiis veritatis.
+                </p>
+              </article>
+            </aside>
+          </section>
+          <div class="row justify-content-center">
+            <section class="myTeams col-lg-9">
+              <h2 class="text-center pt-4">My Teams</h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">W-L-T</th>
+                    <th scope="col">Last Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" id="name"></th>
+                    <td id="distance"></td>
+                    <td id="specialty"></td>
+                    <td id="phone"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-center fs-5 py-2" id="currentIns"></p>
+              <!--This is for the API-->
+              <div class="docList"></div>
+            </section>
+          </div>
+        </div>
       </div>
 
       <!--Modal start-->
-      <div id="formModal" class="form">
-        <div>
-          <p class="formIntro">New User Account Form</p>
-          <p class="enterInfo">
-            Please enter the following information so that we can personalize
-            your experience.
-          </p>
-        </div>
+      <!-- <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      > -->
+      <div class="row justify-content-center">
+        <div id="formModal" class="form col-lg-9 col-sm-12 py-3">
+          <div>
+            <p class="formIntro fs-3 text-center">Add a New Team</p>
+            <p class="enterInfo text-center">
+              Which team would you like to add?
+            </p>
+          </div>
 
-        <form>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Email address</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" class="form-text">
-              We'll never share your email with anyone else.
+          <form>
+            <div class="mb-3">
+              <label for="inputCity" class="form-label fs-4">City Name:</label>
+              <input type="email" class="form-control" id="formCity" />
             </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
-          <div class="mb-3 form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="exampleCheck1"
-            />
-            <label class="form-check-label" for="exampleCheck1"
-              >Check me out</label
-            >
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
-        <div>
-          <h3 class="createBtn">Create</h3>
-        </div>
-
-        <div>
-          <h3 class="formLogo">Find-a-Doc</h3>
+            <div class="mb-3">
+              <label for="inputTeam" class="form-label fs-4">Team Name:</label>
+              <input type="text" class="form-control" id="formTeam" />
+            </div>
+            <button type="submit" class="btn btn-primary" id="newTeamSubmit">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
-
       <!--Modal end-->
     </main>
 
-    <footer class="contact">
-      <h3>Contact Info</h3>
-      <p class="companyEmail"></p>
-    </footer>
+    <footer
+      class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top navBar"
+    >
+      <p class="col-md-4 mb-0 text-muted"></p>
 
-    <script src="assets/js/script.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.7.0.min.js"
-      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-      crossorigin="anonymous"
-    ></script>
+      <a
+        href="/"
+        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+      >
+        <img
+          alt="NHL Fan Plan Logo"
+          width="175"
+          height="125"
+          src="./assets/images/nhl-fan-plan-full.png"
+        />
+      </a>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+      </ul>
+    </footer>
   </body>
+  <script src="script.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+    crossorigin="anonymous"
+  ></script>
 </html>
