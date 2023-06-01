@@ -28,47 +28,22 @@ fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
 
 // ============================================================================================================================================================================================
 
-var submitEl = $("#newTeamSubmit");
-
-submitEl.on("click", function (e) {
-  e.preventDefault();
-
-  var userCity = $('input[name="formCity"]').val();
-  var userTeam = $('input[name="formTeam"]').val();
-
-  window.localStorage.setItem("City", userCity);
-  window.localStorage.setItem("Name", userTeam);
-
-  getTeamID();
-
-  // Resets input field
-  $('input[name="formCity"]').val("");
-  $('input[name="formTeam"]').val("");
-});
-
 // NHL Stats API Documentation: https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md
 // Can pull an INSANE amount of information from this API. Teams, rosters, player stats, schedules, scores, all the way from the beginning of the league to present
 
-function getTeamID() {
-  var userCity = window.localStorage.getItem("City");
-  var cityID = "";
+fetch("https://statsapi.web.nhl.com/api/v1/teams/17?expand=team.stats", {
+  method: "GET",
+})
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log("error", error));
 
-  fetch("https://statsapi.web.nhl.com/api/v1/teams", {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then(function (result) {
-      console.log("Data fethced");
-      for (var i = 0; i < result.teams.length; i++) {
-        if (result.teams[i].venue.city == userCity) {
-          console.log("Found your city");
-          cityID = result.teams[i].id;
-          console.log(cityID);
-          window.localStorage.setItem("TeamID", cityID);
-        }
-      }
-    })
-    .catch((error) => console.log("error", error));
-}
-
-function appendTeamData() {}
+// This function is for storing the values inputted in the 'add a team' section of the webpage
+const userTeam = function (newTeamSubmit) {
+  //setting this const is useful because on the user side, they most likely will not need to. How can they Change if need be?
+  // is the 'formModal' element necessary here?
+  formModal.addEventListener("onclick", formCity, formTeam);
+  console.log("Data Collected!");
+  //"onclick" was moved down here. put simply... the click IS the event.
+  //This shows that 'on click' a new team is submitted, the event listener stores the data that was submitted.
+};
