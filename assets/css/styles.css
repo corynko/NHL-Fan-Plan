@@ -30,10 +30,9 @@
   transition: all 0.4s ease-in-out;
 }
 
-/* main {
-  background-color: var(--darkest);
-  color: var(--white);
-} */
+main {
+  background-color: var(--white);
+}
 
 footer {
   background-color: var(--medium);
@@ -45,7 +44,7 @@ footer {
   color: var(--darkest);
 }
 
-.findADoc {
+.myTeams {
   background-color: var(--white);
   color: var(--darkest);
 }
@@ -55,6 +54,6 @@ footer {
 }
 
 .form {
-  background-image: linear-gradient(var(--medium), var(--lightest));
-  color: var(--darkest);
+  background-color: var(--lighter);
+  color: var(--white);
 }
