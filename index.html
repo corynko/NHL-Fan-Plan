@@ -15,42 +15,41 @@
     />
   </head>
 
-  <header class="d-flex flex-wrap py-3 mb-4 border-bottom navBar">
-    <a href="#">
+  <header
+    class="d-flex flex-wrap justify-content-center py-3 mb-4 px-3 border-bottom navBar"
+  >
+    <a
+      href="/"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+    >
       <img
-        alt="Find-a-Doc Logo"
-        class="mx-4"
+        alt="NHL Fan Plan Logo"
+        width="80"
         height="125"
-        width="100"
         src="./assets/images/nhl-fan-plan@200x.png"
       />
     </a>
-    <div class="text-center">
-      <ul class="nav nav-pills rounded-pill navLinks">
-        <li class="nav-item">
-          <a href="#" class="nav-link" aria-current="page">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Your Account</a>
-        </li>
-        <li class="nav-item"><a href="#" class="nav-link">Contact Us</a></li>
-      </ul>
-    </div>
+
+    <ul class="nav nav-pills align-items-center navLinks">
+      <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">News</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">My Teams</a></li>
+    </ul>
   </header>
 
   <body>
     <main>
       <div class="container">
-        <div class="row w-100">
-          <section class="findADoc col-8">
-            <h2 class="text-center pt-4">Doctors Near You</h2>
+        <div class="row justify-content-center">
+          <section class="myTeams col-8">
+            <h2 class="text-center pt-4">Dashboard</h2>
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col">Name</th>
-                  <th scope="col">Distance From You</th>
-                  <th scope="col">Specialty</th>
-                  <th scope="col">Phone Number</th>
+                  <th scope="col">City</th>
+                  <th scope="col">W-L-T</th>
+                  <th scope="col">Last Result</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,9 +61,7 @@
                 </tr>
               </tbody>
             </table>
-            <p class="text-center fs-5 py-2" id="currentIns">
-              Filtered by Insurance Coverage
-            </p>
+            <p class="text-center fs-5 py-2" id="currentIns"></p>
             <!--This is for the API-->
             <div class="docList"></div>
           </section>
@@ -93,14 +90,33 @@
               </article>
             </aside>
           </section>
+          <div class="row justify-content-center">
+            <section class="myTeams col-lg-9">
+              <h2 class="text-center pt-4">My Teams</h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">W-L-T</th>
+                    <th scope="col">Last Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" id="name"></th>
+                    <td id="distance"></td>
+                    <td id="specialty"></td>
+                    <td id="phone"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-center fs-5 py-2" id="currentIns"></p>
+              <!--This is for the API-->
+              <div class="docList"></div>
+            </section>
+          </div>
         </div>
-        <section class="userFormInfo">
-          <h2>Your Information</h2>
-          <p class="name">Name:</p>
-          <p class="userEmail">Email:</p>
-          <p class="insurance">Insurance Coverage:</p>
-          <p class="zip">Zip Code:</p>
-        </section>
       </div>
 
       <!--Modal start-->
@@ -111,69 +127,67 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       > -->
-        <div class="row justify-content-center">
-          <div id="formModal" class="form col-lg-9">
-            <div>
-              <p class="formIntro">New User Account Form</p>
-              <p class="enterInfo">
-                Please enter the following information so that we can
-                personalize your experience.
-              </p>
-            </div>
-
-            <form>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label"
-                  >Email address</label
-                >
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                />
-                <div id="emailHelp" class="form-text">
-                  We'll never share your email with anyone else.
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label"
-                  >Password</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleInputPassword1"
-                />
-              </div>
-              <div class="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="exampleCheck1"
-                />
-                <label class="form-check-label" for="exampleCheck1"
-                  >Check me out</label
-                >
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+      <div class="row justify-content-center">
+        <div id="formModal" class="form col-lg-9 col-sm-12 py-3">
+          <div>
+            <p class="formIntro fs-3 text-center">Add a New Team</p>
+            <p class="enterInfo text-center">
+              Which team would you like to add?
+            </p>
           </div>
+
+          <form>
+            <div class="mb-3">
+              <label for="inputCity" class="form-label fs-4">City Name:</label>
+              <input type="email" class="form-control" id="formCity" />
+            </div>
+            <div class="mb-3">
+              <label for="inputTeam" class="form-label fs-4">Team Name:</label>
+              <input type="text" class="form-control" id="formTeam" />
+            </div>
+            <button type="submit" class="btn btn-primary" id="newTeamSubmit">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
       <!--Modal end-->
     </main>
 
-    <footer class="py-2 px-4">
-      <h3>Find-a-Doc</h3>
-      <p class="companyEmail"></p>
-    </footer>
+    <footer
+      class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top navBar"
+    >
+      <p class="col-md-4 mb-0 text-muted"></p>
 
-    <script src="script.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.7.0.min.js"
-      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
-      crossorigin="anonymous"
-    ></script>
+      <a
+        href="/"
+        class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+      >
+        <img
+          alt="NHL Fan Plan Logo"
+          width="175"
+          height="125"
+          src="./assets/images/nhl-fan-plan-full.png"
+        />
+      </a>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-2 text-muted"></a>
+        </li>
+      </ul>
+    </footer>
   </body>
+  <script src="script.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+    crossorigin="anonymous"
+  ></script>
 </html>
