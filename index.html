@@ -33,7 +33,10 @@
     <ul class="nav nav-pills align-items-center navLinks">
       <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
       <li class="nav-item"><a href="#" class="nav-link">News</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">My Teams</a></li>
+      <li class="nav-item">
+        <!--we created an id of teamsTab and called on that in this href-->
+        <a href="#teamsTab" class="nav-link">My Teams</a>
+      </li>
     </ul>
   </header>
 
@@ -93,7 +96,7 @@
             </aside>
           </section>
           <div class="row justify-content-center">
-            <section class="myTeams col-lg-9">
+            <section id="teamsTab" class="myTeams col-lg-9">
               <h2 class="text-center pt-4">My Teams</h2>
               <table class="table">
                 <thead>
@@ -194,6 +197,10 @@
           <a href="#" class="nav-link px-2 text-muted"></a>
         </li>
       </ul>
+
+      <div class="#contact">
+        <p>Contact me</p>
+      </div>
     </footer>
   </body>
   <script
