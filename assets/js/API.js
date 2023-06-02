@@ -75,4 +75,7 @@ var teamRegistry = function (myTeams) {
 }  
 
 var textElement = document.getElementById("#contact");
-#contact
+// this function is for the footer section. To add a contact link to a fake email.
+document.display(textElement);
+//this displays the text.
+document.
