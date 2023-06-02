@@ -1,30 +1,46 @@
 // API Token for The News API: s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N
 // The News API Documentation: https://www.thenewsapi.com/documentation
 
-var requestOptions = {
-  method: "GET",
-};
+if (window.localStorage == null) {
+  //what specific value do we need?
+  //populate
+  document.getElementById(formModal).style.form;
+  //console log to make sure this is displayed properly as form
+  console.log(formModal);
+} else {
+  //keep it hidden
+  document.getElementById(formModal).style.display = "none";
+  //how can the user edit this info later?
+  //this else statement styles the display as none
+  //prevents div formModal from appearing
+}
 
-var params = {
-  api_token: "s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N",
-  categories: "sports",
-  search: "nhl",
-  limit: "3",
-  locale: "us",
-  language: "en",
-};
+// var requestOptions = {
+//   method: "GET",
+// };
 
-var esc = encodeURIComponent;
-var query = Object.keys(params)
-  .map(function (k) {
-    return esc(k) + "=" + esc(params[k]);
-  })
-  .join("&");
+// var params = {
+//   api_token: "s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N",
+//   categories: "sports",
+//   search: "nhl",
+//   limit: "3",
+//   locale: "us",
+//   language: "en",
+// };
 
-fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.log("error", error));
+// var esc = encodeURIComponent;
+// var query = Object.keys(params)
+//   .map(function (k) {
+//     return esc(k) + "=" + esc(params[k]);
+//   })
+//   .join("&");
+
+// fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
+//   .then((response) => response.text())
+//   .then((result) => console.log(result))
+//   .catch((error) => console.log("error", error));
+
+//comment this out, we used daily limit. we're not directly working on it.
 
 // ============================================================================================================================================================================================
 
@@ -47,3 +63,16 @@ const userTeam = function (newTeamSubmit) {
   //"onclick" was moved down here. put simply... the click IS the event.
   //This shows that 'on click' a new team is submitted, the event listener stores the data that was submitted.
 };
+//saving user input data from the onclick event
+
+//edit accordingly
+var teamRegistry = function (myTeams) {
+  window.localStorage.getItem(userTeam);
+  //go into local storage and get this item of userTeam
+
+  //we need to DO something with this info
+  //apply it to the myTeams section in  the HTML.
+}  
+
+var textElement = document.getElementById("#contact");
+#contact
