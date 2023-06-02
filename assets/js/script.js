@@ -61,12 +61,12 @@ function getTeamID() {
   })
     .then((response) => response.json())
     .then(function (result) {
-      console.log(result);
+      // console.log(result);
       for (var i = 0; i < result.teams.length; i++) {
         if (result.teams[i].venue.city == userCity) {
-          console.log("Found your city");
+          // console.log("Found your city");
           cityID = result.teams[i].id;
-          console.log(cityID);
+          // console.log(cityID);
           window.localStorage.setItem("TeamID", cityID);
           renderMyTeams();
         }
@@ -77,6 +77,7 @@ function getTeamID() {
 
 // function appendTeamData() {}
 
+//adds team information to main chart
 function renderMyTeams() {
   var teamID = window.localStorage.getItem("TeamID");
 
@@ -86,7 +87,8 @@ function renderMyTeams() {
   for (var i = 0; i < myTeams.length; i++) {
     var getTeams = window.localStorage.getItem("My-Teams");
     var gotTeams = JSON.parse(getTeams);
-    console.log(gotTeams);
+    $("#dashboard").empty();
+    // console.log(gotTeams);
     fetch(
       "https://statsapi.web.nhl.com/api/v1/teams/" +
         gotTeams[i] +
@@ -97,42 +99,31 @@ function renderMyTeams() {
     )
       .then((response) => response.json())
       .then(function (result) {
-        console.log(result);
+        // console.log(result);
+        var trEl = $("<tr>").attr("id", teamID);
 
-        var listName = $("#name");
-        var listName2 = $("#name2");
-        console.log(listName2);
-        var listCity = $("#city");
-        var listCity2 = $("#city2");
-        var listRecord = $("#record");
-        var listRecord2 = $("#record2");
-        var listGoals = $("#GPG");
-        var listShots = $("#SPG");
-
-        listName.text(result.teams[0].name);
-        listName2.text(result.teams[0].name);
-
-        listCity.text(result.teams[0].venue.city);
-        listCity2.text(result.teams[0].venue.city);
-
-        listRecord.text(
+        var thRow = $("<th>").attr("scope", "row");
+        var tdCity = $("<td>").attr("id", "city" + i);
+        var tdRecord = $("<td>").attr("id", "record" + i);
+        var tdGPG = $("<td>").attr("id", "GPG" + i);
+        var tdSPG = $("<td>").attr("id", "SPG" + i);
+        // console.log(result.teams[0].name);
+        thRow.text(result.teams[0].name);
+        $("#dashboard").append(trEl);
+        trEl.append(thRow);
+        tdCity.text(result.teams[0].venue.city);
+        tdRecord.text(
           result.teams[0].teamStats[0].splits[0].stat.wins +
             "-" +
             result.teams[0].teamStats[0].splits[0].stat.losses
         );
-        listRecord2.text(
-          result.teams[0].teamStats[0].splits[0].stat.wins +
-            "-" +
-            result.teams[0].teamStats[0].splits[0].stat.losses
-        );
+        tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
+        tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
 
-        listGoals.text(
-          result.teams[0].teamStats[0].splits[0].stat.goalsPerGame
-        );
-
-        listShots.text(
-          result.teams[0].teamStats[0].splits[0].stat.shotsPerGame
-        );
+        trEl.append(tdCity);
+        trEl.append(tdRecord);
+        trEl.append(tdGPG);
+        trEl.append(tdSPG);
       });
   }
 }
