@@ -30,6 +30,61 @@ var myTeams = [];
 //   .catch((error) => console.log("error", error));
 
 // ============================================================================================================================================================================================
+var checkData = window.localStorage.getItem("My-Teams");
+console.log(checkData);
+
+if (checkData == null) {
+  console.log("help!");
+} else {
+  handlePageLoad();
+}
+
+function handlePageLoad() {
+  var savedTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
+
+  for (var i = 0; i < savedTeams.length; i++) {
+    var getTeams = window.localStorage.getItem("My-Teams");
+    var gotTeams = JSON.parse(getTeams);
+    $("#dashboard").empty();
+    // console.log(gotTeams);
+    fetch(
+      "https://statsapi.web.nhl.com/api/v1/teams/" +
+        gotTeams[i] +
+        "?expand=team.stats",
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then(function (result) {
+        // console.log(result);
+        var trEl = $("<tr>").attr("id", savedTeams[i]);
+
+        var thRow = $("<th>").attr("scope", "row");
+        var tdCity = $("<td>").attr("id", "city" + i);
+        var tdRecord = $("<td>").attr("id", "record" + i);
+        var tdGPG = $("<td>").attr("id", "GPG" + i);
+        var tdSPG = $("<td>").attr("id", "SPG" + i);
+        // console.log(result.teams[0].name);
+        thRow.text(result.teams[0].name);
+        $("#dashboard").append(trEl);
+        trEl.append(thRow);
+        tdCity.text(result.teams[0].venue.city);
+        tdRecord.text(
+          result.teams[0].teamStats[0].splits[0].stat.wins +
+            "-" +
+            result.teams[0].teamStats[0].splits[0].stat.losses
+        );
+        tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
+        tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
+
+        trEl.append(tdCity);
+        trEl.append(tdRecord);
+        trEl.append(tdGPG);
+        trEl.append(tdSPG);
+      });
+  }
+}
 
 var submitEl = $("#newTeamSubmit");
 
