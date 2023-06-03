@@ -4,13 +4,12 @@
 if (window.localStorage == null) {
   //what specific value do we need?
   //populate
-  document.getElementById('formModal').style = "display: block";
+  document.getElementById(formModal).style.form;
   //console log to make sure this is displayed properly as form
   console.log(formModal);
 } else {
   //keep it hidden
-  // document.getElementById('formModal').style = "display: none";
-  // console.log(formModal);
+  document.getElementById(formModal).style.display = "none";
   //how can the user edit this info later?
   //this else statement styles the display as none
   //prevents div formModal from appearing
@@ -75,8 +74,8 @@ var teamRegistry = function (myTeams) {
   //apply it to the myTeams section in  the HTML.
 }  
 
-// var textElement = document.getElementById("#contact");
-// // this function is for the footer section. To add a contact link to a fake email.
-// document.display(textElement);
-// //this displays the text.
-// document.
+var textElement = document.getElementById("#contact");
+// this function is for the footer section. To add a contact link to a fake email.
+document.display(textElement);
+//this displays the text.
+document.
