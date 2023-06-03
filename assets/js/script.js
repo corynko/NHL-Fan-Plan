@@ -1,4 +1,4 @@
-newsCall();
+// newsCall();
 
 function newsCall() {
   var requestOptions = {
@@ -89,6 +89,9 @@ function handlePageLoad() {
         var tdRecord = $("<td>").attr("id", "record" + i);
         var tdGPG = $("<td>").attr("id", "GPG" + i);
         var tdSPG = $("<td>").attr("id", "SPG" + i);
+        var removeRow = $("<td>").attr("id", "remove" + i);
+        var removeEl = $("<button>").attr("id", result.teams[0].id);
+        removeEl.addClass("removeBtn");
         // console.log(result.teams[0].name);
         thRow.text(result.teams[0].name);
         $("#dashboard").append(trEl);
@@ -102,10 +105,14 @@ function handlePageLoad() {
         tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
         tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
 
+        removeEl.text("X");
+
         trEl.append(tdCity);
         trEl.append(tdRecord);
         trEl.append(tdGPG);
         trEl.append(tdSPG);
+        removeRow.append(removeEl);
+        trEl.append(removeEl);
       });
   }
 }
@@ -127,6 +134,26 @@ submitEl.on("click", function (e) {
   // Resets input field
   $('input[name="formCity"]').val("");
   // $('input[name="formTeam"]').val("");
+});
+
+//remove button functionality
+$("#dashboard").on("click", ".removeBtn", function (e) {
+  var clickedParent = $(e.currentTarget).parent();
+  var clickedID = e.currentTarget.id;
+  var compare = JSON.parse(window.localStorage.getItem("My-Teams"));
+
+  for (var i = 0; i < compare.length; i++) {
+    if (compare[i] == clickedID) {
+      compare.splice(i, 1);
+      // console.log(compare);
+      myTeams = compare;
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+    }
+  }
+  console.log(typeof clickedID);
+  //   console.log(clickedID);
+  // console.log(e.currentTarget.id);
+  clickedParent.empty();
 });
 
 // allTeamsEl.on("click", function () {
@@ -200,6 +227,10 @@ function renderMyTeams() {
         var tdRecord = $("<td>").attr("id", "record" + i);
         var tdGPG = $("<td>").attr("id", "GPG" + i);
         var tdSPG = $("<td>").attr("id", "SPG" + i);
+        var removeRow = $("<td>").attr("id", "remove" + i);
+        var removeEl = $("<button>").attr("id", result.teams[0].id);
+        removeEl.addClass("removeBtn");
+
         // console.log(result.teams[0].name);
         thRow.text(result.teams[0].name);
         $("#dashboard").append(trEl);
@@ -213,10 +244,14 @@ function renderMyTeams() {
         tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
         tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
 
+        removeEl.text("X");
+
         trEl.append(tdCity);
         trEl.append(tdRecord);
         trEl.append(tdGPG);
         trEl.append(tdSPG);
+        removeRow.append(removeEl);
+        trEl.append(removeEl);
       });
   }
 }
