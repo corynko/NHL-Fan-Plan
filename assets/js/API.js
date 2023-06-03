@@ -74,8 +74,8 @@ var teamRegistry = function (myTeams) {
   //apply it to the myTeams section in  the HTML.
 }  
 
-var textElement = document.getElementById("#contact");
-// this function is for the footer section. To add a contact link to a fake email.
-document.display(textElement);
-//this displays the text.
-document.
+// var textElement = document.getElementById("#contact");
+// // this function is for the footer section. To add a contact link to a fake email.
+// document.display(textElement);
+// //this displays the text.
+// document.
