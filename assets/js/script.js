@@ -36,6 +36,7 @@ console.log(checkData);
 if (checkData == null) {
   console.log("help!");
 } else {
+  myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
 }
 
@@ -95,7 +96,7 @@ submitEl.on("click", function (e) {
   var userTeam = $('input[name="formTeam"]').val();
 
   window.localStorage.setItem("City", userCity);
-  window.localStorage.setItem("Name", userTeam);
+  // window.localStorage.setItem("Name", userTeam);
 
   getTeamID();
 
@@ -135,6 +136,15 @@ function getTeamID() {
 //adds team information to main chart
 function renderMyTeams() {
   var teamID = window.localStorage.getItem("TeamID");
+  // var currentData = JSON.parse(window.localStorage.getItem("My-Teams"));
+
+  // if (currentData != null) {
+  //   for (var i = 0; i < currentData.length; i++) {
+  //     myTeams.push(currentData[i]);
+  //   }
+  //   console.log(myTeams);
+  //   // myTeams.push(currentData);
+  // }
 
   myTeams.push(teamID);
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
