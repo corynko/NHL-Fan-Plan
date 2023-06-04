@@ -117,45 +117,6 @@ function handlePageLoad() {
   }
 }
 
-//event listener on submit button
-var submitEl = $("#newTeamSubmit");
-
-submitEl.on("click", function (e) {
-  e.preventDefault();
-
-  var userCity = $('input[name="formCity"]').val();
-  // var userTeam = $('input[name="formTeam"]').val();
-
-  window.localStorage.setItem("City", userCity);
-  // window.localStorage.setItem("Name", userTeam);
-
-  getTeamID();
-
-  // Resets input field
-  $('input[name="formCity"]').val("");
-  // $('input[name="formTeam"]').val("");
-});
-
-//remove button functionality
-$("#dashboard").on("click", ".removeBtn", function (e) {
-  var clickedParent = $(e.currentTarget).parent();
-  var clickedID = e.currentTarget.id;
-  var compare = JSON.parse(window.localStorage.getItem("My-Teams"));
-
-  for (var i = 0; i < compare.length; i++) {
-    if (compare[i] == clickedID) {
-      compare.splice(i, 1);
-      // console.log(compare);
-      myTeams = compare;
-      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
-    }
-  }
-  console.log(typeof clickedID);
-  //   console.log(clickedID);
-  // console.log(e.currentTarget.id);
-  clickedParent.empty();
-});
-
 // allTeamsEl.on("click", function () {
 // for (var i = 0; i < )
 
@@ -255,3 +216,139 @@ function renderMyTeams() {
       });
   }
 }
+
+//event listener on submit button
+var submitEl = $("#newTeamSubmit");
+
+submitEl.on("click", function (e) {
+  e.preventDefault();
+
+  var userCity = $('input[name="formCity"]').val();
+  // var userTeam = $('input[name="formTeam"]').val();
+
+  window.localStorage.setItem("City", userCity);
+  // window.localStorage.setItem("Name", userTeam);
+
+  getTeamID();
+
+  // Resets input field
+  $('input[name="formCity"]').val("");
+  // $('input[name="formTeam"]').val("");
+});
+
+function getAllTeams() {
+  myTeams = [];
+  fetch("https://statsapi.web.nhl.com/api/v1/teams", {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(function (result) {
+      // console.log(result);
+      for (var i = 0; i < result.teams.length; i++) {
+        // console.log("Found your city");
+        cityID = result.teams[i].id;
+        myTeams.push(cityID);
+        // console.log(cityID);
+      }
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+      renderMyTeams();
+    })
+    .catch((error) => console.log("error", error));
+}
+
+function getEastTeams() {
+  myTeams = [];
+  fetch("https://statsapi.web.nhl.com/api/v1/teams", {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(function (result) {
+      // console.log(result);
+      for (var i = 0; i < result.teams.length; i++) {
+        var conCheck = result.teams[i].conference.name;
+        if (conCheck == "Eastern") {
+          cityID = result.teams[i].id;
+          myTeams.push(cityID);
+        }
+        // console.log(cityID);
+      }
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+      renderMyTeams();
+    })
+    .catch((error) => console.log("error", error));
+}
+
+function getWestTeams() {
+  myTeams = [];
+  fetch("https://statsapi.web.nhl.com/api/v1/teams", {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(function (result) {
+      // console.log(result);
+      for (var i = 0; i < result.teams.length; i++) {
+        var conCheck = result.teams[i].conference.name;
+        if (conCheck == "Western") {
+          cityID = result.teams[i].id;
+          myTeams.push(cityID);
+        }
+        // console.log(cityID);
+      }
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+      renderMyTeams();
+    })
+    .catch((error) => console.log("error", error));
+}
+
+function get10Teams() {
+  myTeams = [];
+  var i = 0;
+  do {
+    var randoNum = Math.floor(Math.random() * 31);
+    if (!myTeams.includes(randoNum)) {
+      myTeams.push(randoNum);
+
+      console.log(myTeams);
+      i++;
+    }
+  } while (i < 10);
+  window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+  renderMyTeams();
+}
+
+//remove button functionality
+$("#dashboard").on("click", ".removeBtn", function (e) {
+  var clickedParent = $(e.currentTarget).parent();
+  var clickedID = e.currentTarget.id;
+  var compare = JSON.parse(window.localStorage.getItem("My-Teams"));
+
+  for (var i = 0; i < compare.length; i++) {
+    if (compare[i] == clickedID) {
+      compare.splice(i, 1);
+      // console.log(compare);
+      myTeams = compare;
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+    }
+  }
+  console.log(typeof clickedID);
+  //   console.log(clickedID);
+  // console.log(e.currentTarget.id);
+  clickedParent.empty();
+});
+
+var allTeamsEl = $("#allTeams");
+var random10El = $("#random10");
+var easternEl = $("#eastern");
+var westernEl = $("#western");
+var deleteEl = $("#deleteAll");
+
+allTeamsEl.on("click", getAllTeams);
+random10El.on("click", get10Teams);
+easternEl.on("click", getEastTeams);
+westernEl.on("click", getWestTeams);
+
+deleteEl.on("click", function () {
+  myTeams = [];
+  window.localStorage.setItem("My-Teams", myTeams);
+  renderMyTeams();
+});

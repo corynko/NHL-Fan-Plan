@@ -78,3 +78,16 @@ footer {
   color: var(--white);
   transition: all 0.4s ease-in-out;
 }
+
+#demoBtns button {
+  background-color: var(--medium);
+  color: var(--white);
+  font-size: 95%;
+  transition: all 0.4s ease-in-out;
+}
+
+#demoBtns button:hover {
+  background-color: var(--lighter);
+  font-size: 100%;
+  transition: all 0.4s ease-in-out;
+}
