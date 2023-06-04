@@ -24,7 +24,7 @@ function newsCall() {
   fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
     .then((response) => response.json())
     .then(function (result) {
-      console.log(result);
+      // console.log(result);
       var newsParent = $("#news");
       for (var i = 0; i < 3; i++) {
         var imageAdd = $("<img>").attr("src", result.data[i].image_url);
@@ -304,11 +304,11 @@ function get10Teams() {
   myTeams = [];
   var i = 0;
   do {
-    var randoNum = Math.floor(Math.random() * 31);
+    var randoNum = Math.floor(Math.random() * 32);
     if (!myTeams.includes(randoNum)) {
       myTeams.push(randoNum);
 
-      console.log(myTeams);
+      // console.log(myTeams);
       i++;
     }
   } while (i < 10);
@@ -330,7 +330,7 @@ $("#dashboard").on("click", ".removeBtn", function (e) {
       window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
     }
   }
-  console.log(typeof clickedID);
+  // console.log(typeof clickedID);
   //   console.log(clickedID);
   // console.log(e.currentTarget.id);
   clickedParent.empty();
@@ -349,6 +349,8 @@ westernEl.on("click", getWestTeams);
 
 deleteEl.on("click", function () {
   myTeams = [];
-  window.localStorage.setItem("My-Teams", myTeams);
+  window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+  window.localStorage.removeItem("My-Teams");
+  window.localStorage.removeItem("TeamID");
   renderMyTeams();
 });
