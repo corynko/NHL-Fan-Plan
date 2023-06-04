@@ -1,4 +1,4 @@
-// newsCall();
+newsCall();
 
 function newsCall() {
   var requestOptions = {
@@ -8,7 +8,7 @@ function newsCall() {
   var params = {
     //these parameters allow the app to search the news API and find relevant news. It narrows it down to NHL and retrieves the 3 most recent articles in English.
     api_token: "s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N",
-    categories: "sports",
+    // categories: "sports",
     search: "nhl",
     limit: "3",
     locale: "us",
@@ -58,6 +58,9 @@ function newsCall() {
 //global variables
 var myTeams = [];
 var checkData = window.localStorage.getItem("My-Teams");
+var correctionEl = $("#correction");
+
+correctionEl.hide();
 // console.log(checkData);
 
 if (checkData == null) {
@@ -143,6 +146,8 @@ function handlePageLoad() {
 function getTeamID() {
   var userCity = window.localStorage.getItem("City");
   var cityID = "";
+  var notFound = false;
+  // var cityLabelEl = $("#cityLabel");
 
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
@@ -157,7 +162,17 @@ function getTeamID() {
           // console.log(cityID);
           window.localStorage.setItem("TeamID", cityID);
           renderMyTeams();
+          notFound = false;
+          break;
+        } else {
+          notFound = true;
         }
+      }
+      if (notFound) {
+        correctionEl.show();
+      } else {
+        // console.log("Eep!");
+        correctionEl.hide();
       }
     })
     .catch((error) => console.log("error", error));
@@ -223,25 +238,6 @@ function renderMyTeams() {
       });
   }
 }
-
-//event listener on submit button
-var submitEl = $("#newTeamSubmit");
-
-submitEl.on("click", function (e) {
-  e.preventDefault();
-
-  var userCity = $('input[name="formCity"]').val();
-  // var userTeam = $('input[name="formTeam"]').val();
-
-  window.localStorage.setItem("City", userCity);
-  // window.localStorage.setItem("Name", userTeam);
-
-  getTeamID();
-
-  // Resets input field
-  $('input[name="formCity"]').val("");
-  // $('input[name="formTeam"]').val("");
-});
 
 function getAllTeams() {
   myTeams = [];
@@ -317,17 +313,32 @@ function getWestTeams() {
 //This is how the functionality of the button works. When the Get 10 teams button is pressed. The ID's of 10 teams are given back to the user in the console log.
 function get10Teams() {
   myTeams = [];
+  teamIdCheck = [];
   var i = 0;
   do {
     var randoNum = Math.floor(Math.random() * 32);
-    if (!myTeams.includes(randoNum)) {
-      myTeams.push(randoNum);
+    if (!teamIdCheck.includes(randoNum)) {
+      teamIdCheck.push(randoNum);
 
       // console.log(myTeams);
       i++;
       //the i++ here makes it so that the console log displays myTeams, while iterating through the variable.
     }
   } while (i < 10);
+  fetch("https://statsapi.web.nhl.com/api/v1/teams", {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(function (result) {
+      // console.log(result);
+      for (var i = 0; i < teamIdCheck.length; i++) {
+        cityID = result.teams[teamIdCheck[i]].id;
+        myTeams.push(cityID);
+        // console.log(cityID);
+      }
+      window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+      renderMyTeams();
+    });
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
   renderMyTeams();
 }
@@ -371,4 +382,23 @@ deleteEl.on("click", function () {
   window.localStorage.removeItem("My-Teams");
   window.localStorage.removeItem("TeamID");
   renderMyTeams();
+});
+
+//event listener on submit button
+var submitEl = $("#newTeamSubmit");
+
+submitEl.on("click", function (e) {
+  e.preventDefault();
+
+  var userCity = $('input[name="formCity"]').val();
+  // var userTeam = $('input[name="formTeam"]').val();
+
+  window.localStorage.setItem("City", userCity);
+  // window.localStorage.setItem("Name", userTeam);
+
+  getTeamID();
+
+  // Resets input field
+  $('input[name="formCity"]').val("");
+  // $('input[name="formTeam"]').val("");
 });
