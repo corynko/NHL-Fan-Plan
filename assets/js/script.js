@@ -6,7 +6,6 @@ function newsCall() {
   };
 
   var params = {
-    //these parameters allow the app to search the news API and find relevant news. It narrows it down to NHL and retrieves the 3 most recent articles in English.
     api_token: "s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N",
     // categories: "sports",
     search: "nhl",
@@ -23,7 +22,6 @@ function newsCall() {
     .join("&");
 
   fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
-    //fetching here allows us to retrieve the news data, so that we can then display it.
     .then((response) => response.json())
     .then(function (result) {
       // console.log(result);
@@ -45,7 +43,6 @@ function newsCall() {
         var snippetAdd = $("<p>").addClass("py-4");
         snippetAdd.text(result.data[i].snippet);
         newsParent.append(snippetAdd);
-        //We append to add these elements to the HTML structure. This allows the user to view the data after it has been parsed and retrieved
       }
     })
     .catch((error) => console.log("error", error));
@@ -57,23 +54,22 @@ function newsCall() {
 
 //global variables
 var myTeams = [];
-var checkData = window.localStorage.getItem("My-Teams");
+var newCheck = [];
+var checkData = window.localStorage.getItem("newCheck");
 var correctionEl = $("#correction");
+var modalJObj = $("#staticBackdrop");
 
 correctionEl.hide();
 // console.log(checkData);
 
 if (checkData == null) {
   console.log("New User");
-  //When the page loads, if localStorage is found to be null, the string "New User is console logged."
 } else {
-  //if localStorage is populated with relevant content, we parse through the JSON string and get the items that have the key "My-Teams".
   myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
 }
 
 function handlePageLoad() {
-  //on pageload, we search localStorage for any userdata contain the key "My-Teams" and retrive it.
   var savedTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
 
   for (var i = 0; i < savedTeams.length; i++) {
@@ -126,20 +122,6 @@ function handlePageLoad() {
   }
 }
 
-//The below lines were commented out to avoid redundancy and potential bugs.
-// allTeamsEl.on("click", function () {
-// for (var i = 0; i < )
-
-//   window.localStorage.setItem("City", userCity);
-//   // window.localStorage.setItem("Name", userTeam);
-
-//   getTeamID();
-
-//   // Resets input field
-//   $('input[name="formCity"]').val("");
-//   // $('input[name="formTeam"]').val("");
-// });
-
 // NHL Stats API Documentation: https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md
 // Can pull an INSANE amount of information from this API. Teams, rosters, player stats, schedules, scores, all the way from the beginning of the league to present
 
@@ -147,7 +129,6 @@ function getTeamID() {
   var userCity = window.localStorage.getItem("City");
   var cityID = "";
   var notFound = false;
-  // var cityLabelEl = $("#cityLabel");
 
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
@@ -163,6 +144,8 @@ function getTeamID() {
           window.localStorage.setItem("TeamID", cityID);
           renderMyTeams();
           notFound = false;
+          //hide modal
+          modalJObj.modal("hide");
           break;
         } else {
           notFound = true;
@@ -184,58 +167,68 @@ function getTeamID() {
 function renderMyTeams() {
   var teamID = window.localStorage.getItem("TeamID");
 
+  newCheck.push(1);
+  window.localStorage.setItem("newCheck", newCheck);
+
   myTeams.push(teamID);
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
-  //for the duration of the variable myTeam's length, we iterate parsing the data from local storage
+
+  checkNull();
+
   for (var i = 0; i < myTeams.length; i++) {
     var getTeams = window.localStorage.getItem("My-Teams");
     var gotTeams = JSON.parse(getTeams);
-    $("#dashboard").empty();
-    // console.log(gotTeams);
-    fetch(
-      "https://statsapi.web.nhl.com/api/v1/teams/" +
-        gotTeams[i] +
-        "?expand=team.stats",
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then(function (result) {
-        // console.log(result);
-        var trEl = $("<tr>").attr("id", teamID);
+    if (gotTeams[i] == null) {
+      $("#dashboard").empty();
+      break;
+    } else {
+      $("#dashboard").empty();
+      // console.log(gotTeams);
+      fetch(
+        "https://statsapi.web.nhl.com/api/v1/teams/" +
+          gotTeams[i] +
+          "?expand=team.stats",
+        {
+          method: "GET",
+        }
+      )
+        .then((response) => response.json())
+        .then(function (result) {
+          // console.log(result);
+          var trEl = $("<tr>").attr("id", teamID);
 
-        var thRow = $("<th>").attr("scope", "row");
-        var tdCity = $("<td>").attr("id", "city" + i);
-        var tdRecord = $("<td>").attr("id", "record" + i);
-        var tdGPG = $("<td>").attr("id", "GPG" + i);
-        var tdSPG = $("<td>").attr("id", "SPG" + i);
-        var removeRow = $("<td>").attr("id", "remove" + i);
-        var removeEl = $("<button>").attr("id", result.teams[0].id);
-        removeEl.addClass("removeBtn");
+          var thRow = $("<th>").attr("scope", "row");
+          var tdCity = $("<td>").attr("id", "city" + i);
+          var tdRecord = $("<td>").attr("id", "record" + i);
+          var tdGPG = $("<td>").attr("id", "GPG" + i);
+          var tdSPG = $("<td>").attr("id", "SPG" + i);
+          var removeRow = $("<td>").attr("id", "remove" + i);
+          var removeEl = $("<button>").attr("id", result.teams[0].id);
+          removeEl.addClass("removeBtn");
 
-        // console.log(result.teams[0].name);
-        thRow.text(result.teams[0].name);
-        $("#dashboard").append(trEl);
-        trEl.append(thRow);
-        tdCity.text(result.teams[0].venue.city);
-        tdRecord.text(
-          result.teams[0].teamStats[0].splits[0].stat.wins +
-            "-" +
-            result.teams[0].teamStats[0].splits[0].stat.losses
-        );
-        tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
-        tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
+          // console.log(result.teams[0].name);
+          thRow.text(result.teams[0].name);
+          $("#dashboard").append(trEl);
+          trEl.append(thRow);
+          tdCity.text(result.teams[0].venue.city);
+          tdRecord.text(
+            result.teams[0].teamStats[0].splits[0].stat.wins +
+              "-" +
+              result.teams[0].teamStats[0].splits[0].stat.losses
+          );
+          tdGPG.text(result.teams[0].teamStats[0].splits[0].stat.goalsPerGame);
+          tdSPG.text(result.teams[0].teamStats[0].splits[0].stat.shotsPerGame);
 
-        removeEl.text("X");
+          removeEl.text("X");
 
-        trEl.append(tdCity);
-        trEl.append(tdRecord);
-        trEl.append(tdGPG);
-        trEl.append(tdSPG);
-        removeRow.append(removeEl);
-        trEl.append(removeEl);
-      });
+          trEl.append(tdCity);
+          trEl.append(tdRecord);
+          trEl.append(tdGPG);
+          trEl.append(tdSPG);
+          removeRow.append(removeEl);
+          trEl.append(removeEl);
+        });
+    }
   }
 }
 
@@ -243,7 +236,6 @@ function getAllTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
-    //using the get method here allows us to get information from all teams from the API without getting the extra information.
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -255,7 +247,6 @@ function getAllTeams() {
         // console.log(cityID);
       }
       window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
-      //Here, we make a change to the localStorage by stringifying the new data into the JSON string.
       renderMyTeams();
     })
     .catch((error) => console.log("error", error));
@@ -265,7 +256,6 @@ function getEastTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
-    //using the GET method here allows us to specifically grab the East teams from the API.
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -273,7 +263,6 @@ function getEastTeams() {
       for (var i = 0; i < result.teams.length; i++) {
         var conCheck = result.teams[i].conference.name;
         if (conCheck == "Eastern") {
-          //The conference is represented by the above variable. if The team is identified as an "Eastern" team, then that data is set in local storage."
           cityID = result.teams[i].id;
           myTeams.push(cityID);
         }
@@ -289,7 +278,6 @@ function getWestTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
-    //Same with the East teams, this GET method allows us to
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -297,7 +285,6 @@ function getWestTeams() {
       for (var i = 0; i < result.teams.length; i++) {
         var conCheck = result.teams[i].conference.name;
         if (conCheck == "Western") {
-          //The conference is represented by the above variable. if The team is identified as an "Western" team, then that data is set in local storage."
           cityID = result.teams[i].id;
           myTeams.push(cityID);
         }
@@ -307,10 +294,8 @@ function getWestTeams() {
       renderMyTeams();
     })
     .catch((error) => console.log("error", error));
-  //if there is an error, the console log displays a string with the value of "error"
 }
 
-//This is how the functionality of the button works. When the Get 10 teams button is pressed. The ID's of 10 teams are given back to the user in the console log.
 function get10Teams() {
   myTeams = [];
   teamIdCheck = [];
@@ -322,7 +307,6 @@ function get10Teams() {
 
       // console.log(myTeams);
       i++;
-      //the i++ here makes it so that the console log displays myTeams, while iterating through the variable.
     }
   } while (i < 10);
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
@@ -341,6 +325,17 @@ function get10Teams() {
     });
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
   renderMyTeams();
+}
+
+function checkNull() {
+  var checkNull = JSON.parse(window.localStorage.getItem("My-Teams"));
+  for (var i = 0; i < checkNull.length; i++) {
+    if (!checkNull[i]) {
+      // console.log("null");
+      checkNull.splice(i, 1);
+    }
+  }
+  window.localStorage.setItem("My-Teams", JSON.stringify(checkNull));
 }
 
 //remove button functionality
@@ -369,19 +364,20 @@ var easternEl = $("#eastern");
 var westernEl = $("#western");
 var deleteEl = $("#deleteAll");
 
-//These are click events for the buttons displayed on the page. We used Jquery here for ease of implementation, and presentation's sake.
 allTeamsEl.on("click", getAllTeams);
 random10El.on("click", get10Teams);
 easternEl.on("click", getEastTeams);
 westernEl.on("click", getWestTeams);
 
-//when the X buttons are clicked, rows are deleted accordingly. When pressed, the row is not rendered.
 deleteEl.on("click", function () {
   myTeams = [];
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
   window.localStorage.removeItem("My-Teams");
   window.localStorage.removeItem("TeamID");
   renderMyTeams();
+  newCheck = [];
+  window.localStorage.setItem("newCheck", newCheck);
+  window.localStorage.removeItem("newCheck");
 });
 
 //event listener on submit button
@@ -401,4 +397,13 @@ submitEl.on("click", function (e) {
   // Resets input field
   $('input[name="formCity"]').val("");
   // $('input[name="formTeam"]').val("");
+});
+
+var modalFormEl = $("#modalInput");
+var addTeamEl = $("#addTeam");
+var modalEl = document.getElementById("staticBackdrop");
+
+addTeamEl.on("click", function () {
+  modalEl.focus();
+  console.log(modalFormEl);
 });
