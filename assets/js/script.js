@@ -6,6 +6,7 @@ function newsCall() {
   };
 
   var params = {
+    //these parameters allow the app to search the news API and find relevant news. It narrows it down to NHL and retrieves the 3 most recent articles in English.
     api_token: "s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N",
     // categories: "sports",
     search: "nhl",
@@ -22,6 +23,7 @@ function newsCall() {
     .join("&");
 
   fetch("https://api.thenewsapi.com/v1/news/all?" + query, requestOptions)
+    //fetching here allows us to retrieve the news data, so that we can then display it.
     .then((response) => response.json())
     .then(function (result) {
       // console.log(result);
@@ -43,6 +45,7 @@ function newsCall() {
         var snippetAdd = $("<p>").addClass("py-4");
         snippetAdd.text(result.data[i].snippet);
         newsParent.append(snippetAdd);
+        //We append to add these elements to the HTML structure. This allows the user to view the data after it has been parsed and retrieved
       }
     })
     .catch((error) => console.log("error", error));
@@ -64,12 +67,15 @@ correctionEl.hide();
 
 if (checkData == null) {
   console.log("New User");
+  //When the page loads, if localStorage is found to be null, the string "New User is console logged."
 } else {
+  //if localStorage is populated with relevant content, we parse through the JSON string and get the items that have the key "My-Teams".
   myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
 }
 
 function handlePageLoad() {
+  //on pageload, we search localStorage for any userdata contain the key "My-Teams" and retrive it.
   var savedTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
 
   for (var i = 0; i < savedTeams.length; i++) {
@@ -121,6 +127,7 @@ function handlePageLoad() {
       });
   }
 }
+
 
 // NHL Stats API Documentation: https://gitlab.com/dword4/nhlapi/-/blob/master/stats-api.md
 // Can pull an INSANE amount of information from this API. Teams, rosters, player stats, schedules, scores, all the way from the beginning of the league to present
@@ -174,6 +181,8 @@ function renderMyTeams() {
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
 
   checkNull();
+  
+  //for the duration of the variable myTeam's length, we iterate parsing the data from local storage
 
   for (var i = 0; i < myTeams.length; i++) {
     var getTeams = window.localStorage.getItem("My-Teams");
@@ -236,6 +245,7 @@ function getAllTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
+    //using the get method here allows us to get information from all teams from the API without getting the extra information.
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -247,6 +257,7 @@ function getAllTeams() {
         // console.log(cityID);
       }
       window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
+      //Here, we make a change to the localStorage by stringifying the new data into the JSON string.
       renderMyTeams();
     })
     .catch((error) => console.log("error", error));
@@ -256,6 +267,7 @@ function getEastTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
+    //using the GET method here allows us to specifically grab the East teams from the API.
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -263,6 +275,7 @@ function getEastTeams() {
       for (var i = 0; i < result.teams.length; i++) {
         var conCheck = result.teams[i].conference.name;
         if (conCheck == "Eastern") {
+          //The conference is represented by the above variable. if The team is identified as an "Eastern" team, then that data is set in local storage."
           cityID = result.teams[i].id;
           myTeams.push(cityID);
         }
@@ -278,6 +291,7 @@ function getWestTeams() {
   myTeams = [];
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
     method: "GET",
+    //Same with the East teams, this GET method allows us to
   })
     .then((response) => response.json())
     .then(function (result) {
@@ -285,6 +299,7 @@ function getWestTeams() {
       for (var i = 0; i < result.teams.length; i++) {
         var conCheck = result.teams[i].conference.name;
         if (conCheck == "Western") {
+          //The conference is represented by the above variable. if The team is identified as an "Western" team, then that data is set in local storage."
           cityID = result.teams[i].id;
           myTeams.push(cityID);
         }
@@ -294,8 +309,10 @@ function getWestTeams() {
       renderMyTeams();
     })
     .catch((error) => console.log("error", error));
+  //if there is an error, the console log displays a string with the value of "error"
 }
 
+//This is how the functionality of the button works. When the Get 10 teams button is pressed. The ID's of 10 teams are given back to the user in the console log.
 function get10Teams() {
   myTeams = [];
   teamIdCheck = [];
@@ -307,6 +324,7 @@ function get10Teams() {
 
       // console.log(myTeams);
       i++;
+      //the i++ here makes it so that the console log displays myTeams, while iterating through the variable.
     }
   } while (i < 10);
   fetch("https://statsapi.web.nhl.com/api/v1/teams", {
@@ -364,11 +382,13 @@ var easternEl = $("#eastern");
 var westernEl = $("#western");
 var deleteEl = $("#deleteAll");
 
+//These are click events for the buttons displayed on the page. We used Jquery here for ease of implementation, and presentation's sake.
 allTeamsEl.on("click", getAllTeams);
 random10El.on("click", get10Teams);
 easternEl.on("click", getEastTeams);
 westernEl.on("click", getWestTeams);
 
+//when the X buttons are clicked, rows are deleted accordingly. When pressed, the row is not rendered.
 deleteEl.on("click", function () {
   myTeams = [];
   window.localStorage.setItem("My-Teams", JSON.stringify(myTeams));
