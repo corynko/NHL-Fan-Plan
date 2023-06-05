@@ -91,3 +91,35 @@ footer {
   font-size: 100%;
   transition: all 0.4s ease-in-out;
 }
+
+#modalHeader {
+  background-color: var(--lighter);
+  color: var(--white);
+}
+
+#dismiss {
+  color: var(--white);
+}
+
+.customBtn {
+  background-color: var(--medium);
+  color: var(--white);
+  transition: all 0.4s ease-in-out;
+}
+.customBtn:hover {
+  background-color: var(--lighter);
+  transition: all 0.4s ease-in-out;
+}
+
+#addTeam {
+  font-size: 115%;
+  background-color: var(--lighter);
+  color: var(--white);
+  transition: all 0.4s ease-in-out;
+}
+#addTeam:hover {
+  font-size: 115%;
+  background-color: var(--medium);
+  border: solid 2px var(--lighter);
+  transition: all 0.4s ease-in-out;
+}
