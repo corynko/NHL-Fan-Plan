@@ -35,7 +35,10 @@ console.log(checkData);
 
 if (checkData == null) {
   console.log("help!");
+  window.localStorage === "My-Teams"
+  document.getElementById('formModal').style.display = 'block';
 } else {
+  document.getElementById('formModal').style.display = 'none';
   myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
 }

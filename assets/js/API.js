@@ -1,15 +1,17 @@
 // API Token for The News API: s2MrFnpSyjoXrUViZDIeLTMvwAwsjDrlNnTdBq0N
 // The News API Documentation: https://www.thenewsapi.com/documentation
 
-if (window.localStorage == null) {
+if (window.localStorage === "My-Teams") {
   //what specific value do we need?
   //populate
-  document.getElementById(formModal).style.form;
+  document.getElementById('formModal').style.display = 'block';
   //console log to make sure this is displayed properly as form
-  console.log(formModal);
+  console.log('formModal');
+  // localStorage.setItem('modalShown', 'true');
 } else {
   //keep it hidden
-  document.getElementById(formModal).style.display = "none";
+  // document.getElementById('formModal').style.display = 'none';
+  // console.log('formModal')
   //how can the user edit this info later?
   //this else statement styles the display as none
   //prevents div formModal from appearing
@@ -58,8 +60,8 @@ fetch("https://statsapi.web.nhl.com/api/v1/teams/17?expand=team.stats", {
 const userTeam = function (newTeamSubmit) {
   //setting this const is useful because on the user side, they most likely will not need to. How can they Change if need be?
   // is the 'formModal' element necessary here?
-  formModal.addEventListener("onclick", formCity, formTeam);
-  console.log("Data Collected!");
+  // formModal.addEventListener("onclick", formCity, formTeam);
+  // console.log("Data Collected!");
   //"onclick" was moved down here. put simply... the click IS the event.
   //This shows that 'on click' a new team is submitted, the event listener stores the data that was submitted.
 };
