@@ -6,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find a Doc</title>
     <link rel="stylesheet" href="./assets/css/reset.css" />
+
+
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <!--Below, we link Bootstrap to help streamline our development process.-->
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
 
   <header
-    class="d-flex flex-wrap justify-content-center py-3 mb-4 px-3 border-bottom navBar"
+    class="d-flex flex-wrap justify-content-center py-3 mb-4 px-4 border-bottom navBar"
   >
     <a
       href="/"
@@ -33,6 +37,17 @@
     </a>
 
     <ul class="nav nav-pills align-items-center navLinks">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+        id="addTeam"
+      >
+        Add a Team
+      </button>
+
       <!--This unordered list displays the nav bar-->
       <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
       <li class="nav-item"><a href="#" class="nav-link">News</a></li>
@@ -40,6 +55,7 @@
         <!--we created an id of teamsTab and called on that in this href-->
         <a href="#teamsTab" class="nav-link">My Teams</a>
       </li>
+
     </ul>
   </header>
 
@@ -61,21 +77,13 @@
                   <th scope="col">Remove</th>
                 </tr>
               </thead>
-              <tbody id="dashboard">
-                <!-- <tr id="stats">
-                  <th scope="row" id="name"></th>
-                  <td id="city"></td>
-                  <td id="record"></td>
-                  <td id="GPG"></td>
-                  <td id="SPG"></td>
-                </tr> -->
-              </tbody>
+              <tbody id="dashboard"></tbody>
             </table>
             <p class="text-center fs-5 py-2" id="currentIns"></p>
             <!--This is for the API-->
             <div class="docList"></div>
           </section>
-          <section class="col-lg-4 py-4">
+          <section class="col-lg-4 col-sm-12 py-4">
             <aside id="news" class="py-5 news text-center"></aside>
           </section>
           <!--We created a class of demoBtns here to more easily style these buttons for aesthetic cohesion.-->
@@ -98,72 +106,76 @@
               </button>
             </div>
           </div>
-          <!-- <div class="row justify-content-center">
-            <section id="teamsTab" class="myTeams col-lg-9">
-              <h2 class="text-center pt-4">My Teams</h2>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Current Record</th>
-                    <th scope="col">Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row" id="name2"></th>
-                    <td id="city2"></td>
-                    <td id="record2"></td>
-                    <td id="delete"></td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-center fs-5 py-2" id="currentIns"></p>
-            </section>
-          </div> -->
         </div>
       </div>
 
       <!--Modal start-->
-      <!-- <div
+      <div
         class="modal fade"
-        id="exampleModal"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
-      > -->
-      <div class="row justify-content-center">
-        <div id="formModal" class="form col-lg-9 col-sm-12 py-3">
-          <div>
-            <p class="formIntro fs-3 text-center">Add a New Team</p>
-            <p class="enterInfo text-center">
-              Which team would you like to add?
-            </p>
-          </div>
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="modalHeader">
+              <!-- <div id="formModal" class="form col-lg-9 col-sm-12 py-3"> -->
 
-          <form>
-            <div class="mb-3">
-              <label for="inputCity" class="form-label fs-4" id="cityLabel"
-                >City Name:</label
-              >
-              <p class="fs-5" id="correction">
-                Check Your Spelling or Try a Different Name (i.e. Tampa instead
-                of Tampa Bay):
-              </p>
-              <input
-                type="text"
-                class="form-control"
-                name="formCity"
-                id="formCity"
-              />
+              <h5 class="formIntro fs-3 modal-title">Add a New Team</h5>
+              <!-- <p class="enterInfo">Which team would you like to add?</p> -->
+              <button
+                type="button"
+                class="btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="dismiss"
+              ></button>
             </div>
-            <button type="submit" class="btn btn-primary" id="newTeamSubmit">
-              Submit
-            </button>
-          </form>
+
+            <div class="modal-body" id="modalBody">
+              <form id="modalInput">
+                <div class="mb-3">
+                  <label for="inputCity" class="form-label fs-4" id="cityLabel"
+                    >City Name:</label
+                  >
+                  <p class="fs-6" id="correction">
+                    Check Your Spelling or Try a Different Name (i.e. Tampa
+                    instead of Tampa Bay):
+                  </p>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="formCity"
+                    id="formCity"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer" id="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary customBtn"
+                id="newTeamSubmit"
+              >
+                Submit
+              </button>
+            </div>
+            <!-- </div> -->
+          </div>
         </div>
       </div>
+
+      <div class="row justify-content-center"></div>
       <!--Modal end-->
     </main>
 
@@ -200,7 +212,20 @@
         </li>
       </ul>
     </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/js/script.js"></script>
   </body>
+
+
   <script
     src="https://code.jquery.com/jquery-3.7.0.min.js"
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
@@ -209,4 +234,5 @@
   <!--Here, the JQuery is embedded for more developer control.-->
   <script src="assets/js/script.js"></script>
   <!--Here, the JavaScript file is linked to ensure more complex functionalities.-->
+
 </html>
