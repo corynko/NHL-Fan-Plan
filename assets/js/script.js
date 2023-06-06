@@ -1,4 +1,4 @@
-// newsCall();
+newsCall();
 
 function newsCall() {
   var requestOptions = {
@@ -69,7 +69,7 @@ if (checkData) {
   myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
 } else {
-  console.log(modalEl);
+  // console.log(modalEl);
   var clickEvent = new MouseEvent("click", {
     view: window,
     bubbles: true,
@@ -407,12 +407,3 @@ submitEl.on("click", function (e) {
   $('input[name="formCity"]').val("");
   // $('input[name="formTeam"]').val("");
 });
-
-// var modalFormEl = $("#modalInput");
-// var addTeamEl = $("#addTeam");
-// var modalEl = document.getElementById("staticBackdrop");
-
-// addTeamEl.on("click", function () {
-//   modalEl.focus();
-//   console.log(modalFormEl);
-// });
