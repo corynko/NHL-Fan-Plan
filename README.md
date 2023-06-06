@@ -6,7 +6,7 @@ A simple dashboard to keep track of your favorite hockey teams stats and the lat
 
 ## Where Is It?
 
-GitHub Pages Link:
+You can use NHL Fan Plan by visiting [corynko.github.io/NHL-Fan-Plan](https://corynko.github.io/NHL-Fan-Plan)
 
 ## How Do I Use It?
 
