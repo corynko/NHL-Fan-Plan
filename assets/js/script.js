@@ -58,15 +58,24 @@ var newCheck = [];
 var checkData = window.localStorage.getItem("newCheck");
 var correctionEl = $("#correction");
 var modalJObj = $("#staticBackdrop");
+var modalFormEl = $("#modalInput");
+var addTeamEl = $("#addTeam");
+var modalEl = document.getElementById("staticBackdrop");
 
 correctionEl.hide();
 // console.log(checkData);
 
-if (checkData == null) {
-  console.log("New User");
-} else {
+if (checkData) {
   myTeams = JSON.parse(window.localStorage.getItem("My-Teams"));
   handlePageLoad();
+} else {
+  // console.log(modalEl);
+  var clickEvent = new MouseEvent("click", {
+    view: window,
+    bubbles: true,
+    cancelable: false,
+  });
+  document.getElementById("addTeam").dispatchEvent(clickEvent);
 }
 
 function handlePageLoad() {
@@ -397,13 +406,4 @@ submitEl.on("click", function (e) {
   // Resets input field
   $('input[name="formCity"]').val("");
   // $('input[name="formTeam"]').val("");
-});
-
-var modalFormEl = $("#modalInput");
-var addTeamEl = $("#addTeam");
-var modalEl = document.getElementById("staticBackdrop");
-
-addTeamEl.on("click", function () {
-  modalEl.focus();
-  console.log(modalFormEl);
 });
